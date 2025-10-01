@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravinshu Makkar - Portfolio</title>
+    <style>
+        /* --- Google Fonts & Global Styles --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #00aaff; /* A vibrant blue */
+            --background-color: #12121f; /* Very dark blue-ish gray */
+            --card-background-color: #1a1a2e; /* Slightly lighter dark blue */
+            --text-color: #e0e0e0; /* Light gray for text */
+            --text-secondary-color: #a0a0a0; /* Dimmer text */
+            --shadow-color: rgba(0, 170, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(18, 18, 31, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--card-background-color);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #hero h1 span {
+            color: var(--primary-color);
+        }
+
+        #hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* The main animation text */
+        .animated-text {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* The typing cursor effect */
+        .animated-text::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { color: transparent }
+            50% { color: var(--primary-color); }
+        }
+
+        #hero .cta-button {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2.5rem;
+            background: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #hero .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+        }
+
+        /* --- Card Styles (used for multiple sections) --- */
+        .card {
+            background: var(--card-background-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+
+        /* --- Education Section --- */
+        #education .education-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .education-item {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1.5rem;
+        }
+
+        .education-item h3 {
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .education-item p {
+            color: var(--text-secondary-color);
+        }
+
+        .education-item .date {
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* --- Achievements & Skills Sections --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-item h3, .skills-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .skills-list {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skills-list li {
+            background: rgba(0, 170, 255, 0.1);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* --- Contact Section --- */
+        #contact .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #contact .contact-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 2rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background: var(--card-background-color);
+            margin-top: 4rem;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2rem;
+            }
+
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+            #hero p {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                display: none; /* Simplification for mobile, can be replaced with a hamburger menu */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="container">
+                <a href="#" class="logo">Ravinshu Makkar</a>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <p>Hello, I'm</p>
+                <h1><span>Ravinshu Makkar</span></h1>
+                <p>I'm a <span id="animated-role" class="animated-text"></span></p>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </div>
+        </section>
+
+        <section id="about" class="container">
+            <h2>About Me</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+                Welcome to my portfolio! I am a passionate and results-driven professional with a strong foundation in technology and problem-solving. My journey has equipped me with a diverse skill set, allowing me to tackle challenges from different angles, whether it's developing robust software, deriving insights from complex data, or empowering others through effective training. I thrive in collaborative environments and am always eager to learn and grow.
+            </p>
+        </section>
+
+        <section id="education" class="container">
+            <h2>Education</h2>
+            <div class="education-grid card">
+                <div class="education-item">
+                    <h3>[Your Degree, e.g., Master of Science in Computer Science]</h3>
+                    <p>[Your University Name], [City, Country]</p>
+                    <p class="date">[Start Year] - [End Year]</p>
+                </div>
+                <hr style="border-color: var(--card-background-color); margin: 1rem 0;">
+                <div class="education-item">
+                    <h3>[Your Degree, e.g., Bachelor of Technology in Information Technology]</h3>
+                    <p>[Your University Name], [City, Country]</p>
+                    <p class="date">[Start Year] - [End Year]</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="container">
+            <h2>Achievements & Certifications</h2>
+            <div class="grid-layout">
+                <div class="achievement-item card">
+                    <h3>[Certification Name, e.g., AWS Certified Developer]</h3>
+                    <p>Achieved a comprehensive understanding of cloud services and development on the AWS platform.</p>
+                </div>
+                <div class="achievement-item card">
+                    <h3>[Award Name, e.g., 'Innovator of the Year' Award]</h3>
+                    <p>Recognized for developing a novel data processing algorithm that improved efficiency by 30%.</p>
+                </div>
+                <div class="achievement-item card">
+                    <h3>[Publication/Project, e.g., Published Research Paper]</h3>
+                    <p>Co-authored a paper on machine learning models for predictive analysis, published in [Journal Name].</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container">
+            <h2>My Skills</h2>
+            <div class="grid-layout">
+                <div class="skills-category card">
+                    <h3>Software Development</h3>
+                    <ul class="skills-list">
+                        <li>Java</li>
+                        <li>Python</li>
+                        <li>JavaScript</li>
+                        <li>Spring Boot</li>
+                        <li>React.js</li>
+                        <li>Node.js</li>
+                        <li>HTML5 & CSS3</li>
+                        <li>SQL & NoSQL</li>
+                        <li>Git & GitHub</li>
+                    </ul>
+                </div>
+                <div class="skills-category card">
+                    <h3>Data Analysis</h3>
+                    <ul class="skills-list">
+                        <li>SQL</li>
+                        <li>Pandas & NumPy</li>
+                        <li>Tableau</li>
+                        <li>Power BI</li>
+                        <li>Excel</li>
+                        <li>Statistics</li>
+                        <li>Data Visualization</li>
+                        <li>ETL Processes</li>
+                    </ul>
+                </div>
+                <div class="skills-category card">
+                    <h3>Training & Soft Skills</h3>
+                    <ul class="skills-list">
+                        <li>Public Speaking</li>
+                        <li>Curriculum Design</li>
+                        <li>Team Leadership</li>
+                        <li>Agile Methodologies</li>
+                        <li>Problem Solving</li>
+                        <li>Communication</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container">
+            <h2>Contact Me</h2>
+            <div class="contact-content">
+                <p>I'm currently open to new opportunities and collaborations. Feel free to reach out via email or connect with me on social media!</p>
+                <ul class="social-links">
+                    <li><a href="mailto:mravinshu@gmail.com" title="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a></li>
+                    <li><a href="https://in.linkedin.com/in/mravinshu" target="_blank" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a></li>
+                    <li><a href="www.github.com/mravinshu" target="_blank" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ravinshu Makkar. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- Animated Role Typing Script ---
+        const roles = ["Software Developer", "Data Analyst", "Trainer"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const animatedRoleElement = document.getElementById('animated-role');
+
+        function type() {
+            const currentRole = roles[roleIndex];
+
+            if (isDeleting) {
+                // Deleting text
+                animatedRoleElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                // Typing text
+                animatedRoleElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            // Determine speed
+            let typeSpeed = 150;
+            if (isDeleting) {
+                typeSpeed /= 2; // Faster when deleting
+            }
+
+            // Check if word is fully typed or deleted
+            if (!isDeleting && charIndex === currentRole.length) {
+                // Pause at end of word
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 500; // Pause before starting new word
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+
+
+        // --- Fade-in Section on Scroll Script ---
+        const sections = document.querySelectorAll('section');
+
+        const observerOptions = {
+            root: null, // observes intersections relative to the viewport
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of the section needs to be visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Stop observing once it's visible
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
